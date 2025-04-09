@@ -4,7 +4,14 @@
     "manifest_version": 2,
     "description": "Automatically pushes your leetcode solutions to GitHub.",
     "browser_action": {
-        "default_icon": "icon.png",
         "default_popup": "index.html"
+    },
+    "permissions": ["identity", "storage", "activeTab"],
+    "oath2": {
+        "client_id": "Ov23liqIyYrd2yZQOIIZ",
+        "scopes": ["read:user", "repo"]
+    },
+    "background": {
+        "service_worker": "background.js"
     }
 }
