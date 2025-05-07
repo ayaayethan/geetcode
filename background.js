@@ -1,26 +1,25 @@
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  if (message.type === "login") {
-    const clientId = "Ov23liqIyYrd2yZQOIIZ";
+  if (message.action === 'login') {
     const redirectUri = chrome.identity.getRedirectURL();
-    const authUrl = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&scope=read:user`;
+    const authUrl = `https://github.com/login/oauth/authorize?client_id=Ov23liqIyYrd2yZQOIIZ&redirect_uri=${encodeURIComponent(redirectUri)}&scope=repo`;
 
-    chrome.identity.launchWebAuthFlow(
-      {
-        url: authUrl,
-        interactive: true
-      },
-      function (redirectUrl) {
-        if (chrome.runtime.lastError || !redirectUrl) {
-          console.error(chrome.runtime.lastError);
-          return;
+    chrome.identity.launchWebAuthFlow({ url: authUrl, interactive: true }, (redirectUrl) => {
+      if (redirectUrl) {
+        const code = new URL(redirectUrl).searchParams.get('code');
+        if (code) {
+          fetch('http://localhost:3000/auth/github', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ code })
+          })
+          .then(response => response.json())
+          .then(data => {
+            chrome.storage.local.set({ github_token: data.access_token });
+            sendResponse({ success: true });
+          });
         }
-
-        const url = new URL(redirectUrl);
-        const code = url.searchParams.get("code");
-        console.log("GitHub OAuth code:", code);
-
-        // NOTE: Now send this `code` to your server to exchange for an access token
       }
-    );
+    });
+    return true;
   }
 });

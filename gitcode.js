@@ -1,3 +1,3 @@
 document.getElementById("login").addEventListener("click", () => {
-  chrome.runtime.sendMessage({ type: "login" });
+  chrome.runtime.sendMessage({ action: "login" });
 });

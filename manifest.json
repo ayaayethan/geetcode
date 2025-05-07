@@ -1,13 +1,17 @@
 {
     "name": "GitCode",
     "version": "1.0",
-    "manifest_version": 2,
+    "manifest_version": 3,
     "description": "Automatically pushes your leetcode solutions to GitHub.",
-    "browser_action": {
+    "permissions": ["identity", "storage", "activeTab"],
+    "action": {
         "default_popup": "index.html"
     },
-    "permissions": ["identity", "storage", "activeTab"],
-    "oath2": {
+    "host_permissions": [
+        "https://api.github.com/*",
+        "http://localhost:3000/*"
+      ],
+    "oauth2": {
         "client_id": "Ov23liqIyYrd2yZQOIIZ",
         "scopes": ["read:user", "repo"]
     },
