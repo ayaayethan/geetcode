@@ -7,7 +7,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       if (redirectUrl) {
         const code = new URL(redirectUrl).searchParams.get('code');
         if (code) {
-          fetch('https://localhost:3000/auth/github', {
+          fetch('http://localhost:3000/auth/github', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ code })

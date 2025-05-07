@@ -8,6 +8,8 @@ app.use(cors());
 app.use(express.json());
 
 app.post('/auth/github', async (req, res) => {
+  console.log(req.body)
+
   const { code } = req.body;
   const response = await axios.post('https://github.com/login/oauth/access_token', {
     client_id: process.env.GITHUB_CLIENT_ID,
