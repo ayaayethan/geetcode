@@ -9,15 +9,20 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         const code = new URL(redirectUrl).searchParams.get('code');
         if (code) {
           // Send code to the backend to be authenticated
-          fetch('http://localhost:3000/auth/github', {
+          fetch('https://geetcode-backend.vercel.app/auth/github', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ code })
           })
           .then(response => response.json())
           .then(data => {
-            chrome.storage.local.set({ github_token: data.access_token }); // Store data in localstorage
-            sendResponse({ success: true }); // Send success response
+            // Store data in local storage
+            chrome.storage.local.set({ github_token: data.access_token }, () => {
+              chrome.storage.local.get('github_token', (result) => {
+                console.log('Verified stored token: ', result.github_token); // Verify it was stored
+              });
+            });
+            sendResponse({ success: true })
           });
         }
       }
