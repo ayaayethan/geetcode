@@ -9,7 +9,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         const code = new URL(redirectUrl).searchParams.get('code');
         if (code) {
           // Send code to the backend to be authenticated
-          fetch('auth/github', {
+          fetch('http://localhost:3000/auth/github', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ code })
