@@ -1,0 +1,22 @@
+{
+  "name": "GeetCode",
+  "version": "1.0",
+  "description": "Automatically commit and push your LeetCode solutions to GitHub.",
+  "manifest_version": 3,
+  "permissions": [
+    "identity",
+    "storage",
+    "activeTab"
+  ],
+  "action": {
+    "default_title": "GeetCode",
+    "default_popup": "index.html"
+  },
+  "oauth2": {
+    "client_id": "Ov23liqIyYrd2yZQOIIZ",
+    "scopes": ["repo"]
+  },
+  "background": {
+    "service_worker": "background.js"
+  }
+}
