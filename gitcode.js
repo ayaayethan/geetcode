@@ -1,4 +1,9 @@
+// elements
 let loginButton = document.getElementById("login");
+let pushButton = document.getElementById("push");
+let title = document.getElementById("title");
+let logoutButton = document.getElementById("logout");
+
 let userAuthToken = null; // user token used to make API calls
 
 // checks when the window loads if a user is already logged in.
@@ -33,10 +38,24 @@ loginButton.addEventListener("click", () => {
 
 // main app function
 function app() {
-  loginButton.style.display = "none";
+  toggleElements("app");
 
-  let pushButton = document.getElementById("push");
-  let title = document.getElementById("title");
-  pushButton.style.display = "block";
-  title.style.display = "block";
+  pushButton.addEventListener("click", () => {
+    // TODO: extract your solution code from the leetcode page and push to github repo
+  })
+
+  // toggles the elements seen based on the page passed in (login or main)
+  function toggleElements(page) {
+    if (page === "login") {
+      loginButton.style.display = "block";
+      pushButton.style.display = "none";
+      title.style.display = "none";
+      logout.style.display = "none";
+    } else if (page === "app") {
+      loginButton.style.display = "none";
+      pushButton.style.display = "block";
+      title.style.display = "block";
+      logout.style.display = "block";
+    }
+  }
 }
