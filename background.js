@@ -18,7 +18,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
           .then(data => {
             // Store data in local storage
             chrome.storage.local.set({ github_token: data.access_token });
-            sendResponse({ success: true })
+            sendResponse({ success: true, github_token: data.access_token });
           });
         }
       }
