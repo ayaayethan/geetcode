@@ -5,9 +5,56 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GitCode</title>
     <script src="gitcode.js" defer></script>
+    <style>
+        body {
+            background-color: rgb(42, 42, 42);
+            width: 150px;
+            height: 175;
+            margin: 0;
+            padding: 10px;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .button {
+            background-color: green;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            margin: 5px;
+            border-radius: 10px;
+            width: 100%;
+        }
+
+        #logout {
+            color: black;
+            background-color: rgb(230, 213, 213);
+            display: none;
+        }
+
+        #push {
+            display: none;
+        }
+
+        #title {
+            color: white;
+            font-weight: bold;
+            text-align: center;
+            font-size: medium;
+        }
+
+        #login {
+            margin-top: 15px;
+        }
+    </style>
 </head>
 <body>
-    <button id="login">Login With Github</button>
-    <div id="title"></div>
+    <div id="title">GeetCode!</div>
+    <button id="login" class="button">Login With Github</button>
+    <button id="push" class="button">Push Solution to GitHub</button>
+    <button id="logout" class="button">Logout</button>
 </body>
 </html>
