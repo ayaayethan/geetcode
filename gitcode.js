@@ -21,6 +21,7 @@ window.onload = () => {
 loginButton.addEventListener("click", () => {
   // start the loading spinner
   loginButton.disabled = true;
+  loginButton.innerHTML = "Authenticating..."
   spinner.style.display = "block";
 
   // sends a message to chrome to start oath
@@ -32,6 +33,7 @@ loginButton.addEventListener("click", () => {
 
     // display spinner
     spinner.style.display = "none";
+    loginButton.innerHTML = "Login with Github"
     loginButton.disabled = false;
 
     console.log("OAuth response: ", res); // log response for sanity check
