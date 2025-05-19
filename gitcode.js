@@ -33,6 +33,10 @@ loginButton.addEventListener("click", () => {
 
 // main app function
 function app() {
-    loginButton.hidden = true;
-    document.getElementById("title").innerHTML = "User is authenticated! Auth token is: " + userAuthToken;
+  loginButton.style.display = "none";
+
+  let pushButton = document.getElementById("push");
+  let title = document.getElementById("title");
+  pushButton.style.display = "block";
+  title.style.display = "block";
 }

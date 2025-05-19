@@ -5,9 +5,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GitCode</title>
     <script src="gitcode.js" defer></script>
+    <style>
+        body {
+            background-color: rgb(42, 42, 42);
+            width: 150px;
+            height: 175;
+            margin: 0;
+            padding: 10px;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .button {
+            background-color: green;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        #push {
+            display: none;
+        }
+
+        #title {
+            color: white;
+            display: none;
+            font-weight: bold;
+            text-align: center;
+            font-size: medium;
+            margin: 7px;
+        }
+    </style>
 </head>
 <body>
-    <button id="login">Login With Github</button>
-    <div id="title"></div>
+    <button id="login" class="button">Login With Github</button>
+    <div id="title">GeetCode!</div>
+    <button id="push" class="button">Push Solution to GitHub</button>
 </body>
 </html>
