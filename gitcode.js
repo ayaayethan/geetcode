@@ -8,7 +8,7 @@ let userAuthToken = null; // user token used to make API calls
 
 // checks when the window loads if a user is already logged in.
 window.onload = () => {
-  chrome.storage.local.get('github_token', (res) => {
+  chrome.storage.local.get("github_token", (res) => {
     if (res.github_token) {
       userAuthToken = res.github_token;
       app();
@@ -16,6 +16,7 @@ window.onload = () => {
   })
 }
 
+// login user on loginButton click
 loginButton.addEventListener("click", () => {
   // sends a message to chrome to start oath
   chrome.runtime.sendMessage({ action: "start_oauth" }, (res) => {
@@ -36,26 +37,36 @@ loginButton.addEventListener("click", () => {
   });
 });
 
+// logout user on logout button click
+// sets userAuthToken to null, remove from local storage, and toggle login screen.
+logoutButton.addEventListener("click", () => {
+  chrome.storage.local.remove("github_token");
+  userAuthToken = null;
+  toggleScreen("login");
+})
+
 // main app function
 function app() {
-  toggleElements("app");
+  toggleScreen("app");
 
   pushButton.addEventListener("click", () => {
     // TODO: extract your solution code from the leetcode page and push to github repo
   })
+}
 
-  // toggles the elements seen based on the page passed in (login or main)
-  function toggleElements(page) {
-    if (page === "login") {
-      loginButton.style.display = "block";
-      pushButton.style.display = "none";
-      title.style.display = "none";
-      logout.style.display = "none";
-    } else if (page === "app") {
-      loginButton.style.display = "none";
-      pushButton.style.display = "block";
-      title.style.display = "block";
-      logout.style.display = "block";
-    }
+// toggles the screen based on the screen passed in (login or app)
+function toggleScreen(screen) {
+  if (screen === "login") {
+    // show login button
+    loginButton.style.display = "block";
+    // hide other buttons
+    pushButton.style.display = "none";
+    logout.style.display = "none";
+  } else if (screen === "app") {
+    // hide login button
+    loginButton.style.display = "none";
+    // show push and logout buttons
+    pushButton.style.display = "block";
+    logout.style.display = "block";
   }
 }
