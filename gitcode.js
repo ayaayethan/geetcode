@@ -3,6 +3,7 @@ let loginButton = document.getElementById("login");
 let pushButton = document.getElementById("push");
 let title = document.getElementById("title");
 let logoutButton = document.getElementById("logout");
+let spinner = document.getElementById("spinner");
 
 let userAuthToken = null; // user token used to make API calls
 
@@ -18,12 +19,20 @@ window.onload = () => {
 
 // login user on loginButton click
 loginButton.addEventListener("click", () => {
+  // start the loading spinner
+  loginButton.disabled = true;
+  spinner.style.display = "block";
+
   // sends a message to chrome to start oath
   chrome.runtime.sendMessage({ action: "start_oauth" }, (res) => {
     if (chrome.runtime.lastError) {
       console.error("Runtime error: ", chrome.runtime.lastError);
       return;
     }
+
+    // display spinner
+    spinner.style.display = "none";
+    loginButton.disabled = false;
 
     console.log("OAuth response: ", res); // log response for sanity check
 

@@ -29,6 +29,17 @@
             width: 100%;
         }
 
+        .spinner {
+            display: none;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid green;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            margin-top: 10px;
+        }
+
         #logout {
             color: black;
             background-color: rgb(230, 213, 213);
@@ -49,10 +60,16 @@
         #login {
             margin-top: 15px;
         }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body>
     <div id="title">GeetCode!</div>
+    <div id="spinner" class="spinner"></div>
     <button id="login" class="button">Login With Github</button>
     <button id="push" class="button">Push Solution to GitHub</button>
     <button id="logout" class="button">Logout</button>
