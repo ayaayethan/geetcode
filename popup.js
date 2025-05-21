@@ -1,5 +1,3 @@
-import { Octokit, App } from "octokit";
-
 // elements
 let loginButton = document.getElementById("login");
 let pushButton = document.getElementById("push");
@@ -78,12 +76,8 @@ pushButton.addEventListener("click", () => {
         return monaco.editor.getModels()[0].getValue();
       }
     })
-    .then( async (response) => {
+    .then((response) => {
       const solution_code = response[0].result; // extracted solution code
-      const octokit = new Octokit({ auth: userAuthToken });
-      const { data: { login } } = await octokit.rest.users.getAuthenticated();
-
-      console.log(login);
 
       // TODO: Push solution code to a GitHub repo
 
@@ -105,12 +99,31 @@ function toggleScreen(screen) {
     // hide other buttons
     pushButton.style.display = "none";
     logout.style.display = "none";
+
+    title.innerHTML = "GeetCode!"
+
   } else if (screen === "app") {
     // hide login button
     loginButton.style.display = "none";
     // show push and logout buttons
     pushButton.style.display = "block";
     logout.style.display = "block";
+
+      // grab user's name and display
+    fetch("https://api.github.com/user", {
+      method: "GET",
+      headers: {
+        "Accept": "application/vnd.github+json",
+        "Authorization": `Bearer ${userAuthToken}`,
+        "X-GitHub-Api-Version": '2022-11-28'
+      }
+    })
+    .then(res => {
+      return res.json();
+    })
+    .then(data => {
+      title.innerHTML = `Welcome, ${data.name}`;
+    })
   }
 }
 
