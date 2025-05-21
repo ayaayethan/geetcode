@@ -56,13 +56,51 @@ logoutButton.addEventListener("click", () => {
   toggleScreen("login");
 })
 
+// push solution code to github repo
+pushButton.addEventListener("click", () => {
+  // TODO: extract your solution code from the leetcode page and push to github repo
+
+  // get a reference to the current tab (leetcode)
+  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+    const tab = tabs[0]; // current open tab
+
+    // verify we are on leetcode.com
+    if (!tab.url || !tab.url.includes("leetcode.com/problems/")) {
+      alert("Please navigate to a LeetCode problem or submission before pushing!");
+      return;
+    }
+
+    // send a message to our content script
+    chrome.tabs.sendMessage(tab.id, { action: "extract_code" }, (res) => {
+      if (chrome.runtime.lastError) {
+        console.log("Error communicating with tab: ", chrome.runtime.lastError.message);
+        return;
+      }
+
+      if (res && res.solution_code) {
+        console.log("Solution Code: ", res.solution_code);
+      } else {
+        console.log("No code returned.");
+      }
+
+      // needs logic for handling potential duplicate repos. prevent overriding existing ones.
+      // maybe use a metadata file? or github topics? (do more research)
+
+      // get a reference to repo on user's account called "[username]-leetcode-solutions"
+
+      // if this reference is null
+        // create a new github repo on user's account called "[username]-leetcode-solutions"
+
+      // create a new file "[problem-name].[language-used]", put solution code in file
+
+      // push file to github repo
+    })
+  })
+})
+
 // main app function
 function app() {
   toggleScreen("app");
-
-  pushButton.addEventListener("click", () => {
-    // TODO: extract your solution code from the leetcode page and push to github repo
-  })
 }
 
 // toggles the screen based on the screen passed in (login or app)

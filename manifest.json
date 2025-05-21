@@ -6,7 +6,9 @@
   "permissions": [
     "identity",
     "storage",
-    "activeTab"
+    "scripting",
+    "activeTab",
+    "tabs"
   ],
   "action": {
     "default_title": "GeetCode",
@@ -18,5 +20,13 @@
   },
   "background": {
     "service_worker": "background.js"
-  }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://leetcode.com/problems/*"
+        ],
+      "js": ["content.js"]
+    }
+  ]
 }
