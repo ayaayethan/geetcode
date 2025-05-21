@@ -58,8 +58,6 @@ logoutButton.addEventListener("click", () => {
 
 // push solution code to github repo
 pushButton.addEventListener("click", () => {
-  // TODO: extract your solution code from the leetcode page and push to github repo
-
   // get a reference to the current tab (leetcode)
   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
     const tab = tabs[0]; // current open tab
@@ -78,17 +76,13 @@ pushButton.addEventListener("click", () => {
         return monaco.editor.getModels()[0].getValue();
       }
     })
-    .then((res) => {
-      const solution_code = res.result;
-      console.log(solution_code);
+    .then((response) => {
+      const solution_code = response[0].result; // extracted solution code
+
+      // TODO: Push solution code to a GitHub repo
     })
   })
 })
-
-// main app function
-function app() {
-  toggleScreen("app");
-}
 
 // toggles the screen based on the screen passed in (login or app)
 function toggleScreen(screen) {
@@ -105,4 +99,9 @@ function toggleScreen(screen) {
     pushButton.style.display = "block";
     logout.style.display = "block";
   }
+}
+
+// main app function
+function app() {
+  toggleScreen("app");
 }
