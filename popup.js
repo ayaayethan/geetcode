@@ -1,3 +1,5 @@
+import { Octokit, App } from "octokit";
+
 // elements
 let loginButton = document.getElementById("login");
 let pushButton = document.getElementById("push");
@@ -76,10 +78,21 @@ pushButton.addEventListener("click", () => {
         return monaco.editor.getModels()[0].getValue();
       }
     })
-    .then((response) => {
+    .then( async (response) => {
       const solution_code = response[0].result; // extracted solution code
+      const octokit = new Octokit({ auth: userAuthToken });
+      const { data: { login } } = await octokit.rest.users.getAuthenticated();
+
+      console.log(login);
 
       // TODO: Push solution code to a GitHub repo
+
+      // get reference to repo: "[username]-geetcode-solutions"
+
+
+      // if reference is null, create repo
+
+      // push solution code in a file and commit to repo
     })
   })
 })
