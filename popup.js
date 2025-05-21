@@ -66,34 +66,21 @@ pushButton.addEventListener("click", () => {
 
     // verify we are on leetcode.com
     if (!tab.url || !tab.url.includes("leetcode.com/problems/")) {
-      alert("Please navigate to a LeetCode problem or submission before pushing!");
+      alert("Please navigate to a LeetCode problem or submission page before pushing!");
       return;
     }
 
-    // send a message to our content script
-    chrome.tabs.sendMessage(tab.id, { action: "extract_code" }, (res) => {
-      if (chrome.runtime.lastError) {
-        console.log("Error communicating with tab: ", chrome.runtime.lastError.message);
-        return;
+    // execute a script to extract solution code
+    chrome.scripting.executeScript({
+      target: { tabId: tab.id },
+      world: "MAIN",
+      func: () => {
+        return monaco.editor.getModels()[0].getValue();
       }
-
-      if (res && res.solution_code) {
-        console.log("Solution Code: ", res.solution_code);
-      } else {
-        console.log("No code returned.");
-      }
-
-      // needs logic for handling potential duplicate repos. prevent overriding existing ones.
-      // maybe use a metadata file? or github topics? (do more research)
-
-      // get a reference to repo on user's account called "[username]-leetcode-solutions"
-
-      // if this reference is null
-        // create a new github repo on user's account called "[username]-leetcode-solutions"
-
-      // create a new file "[problem-name].[language-used]", put solution code in file
-
-      // push file to github repo
+    })
+    .then((res) => {
+      const solution_code = res.result;
+      console.log(solution_code);
     })
   })
 })
