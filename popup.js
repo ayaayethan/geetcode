@@ -51,9 +51,10 @@ loginButton.addEventListener("click", () => {
 // logout user on logout button click
 // sets userAuthToken to null, remove from local storage, and toggle login screen.
 logoutButton.addEventListener("click", () => {
-  chrome.storage.local.remove("github_token");
-  userAuthToken = null;
-  toggleScreen("login");
+  chrome.storage.local.remove("github_token", () => {
+    userAuthToken = null;
+    toggleScreen("login");
+  });
 })
 
 // push solution code to github repo
@@ -73,11 +74,24 @@ pushButton.addEventListener("click", () => {
       target: { tabId: tab.id },
       world: "MAIN",
       func: () => {
-        return monaco.editor.getModels()[0].getValue();
+        const model = monaco.editor.getModels()[0];
+        const language = model.getLanguageId();
+        // get the extension for the language (.py, .js, .cpp, etc)
+        const langExtension = monaco.languages.getLanguages()
+                                              .find(l => l.id === language)
+                                              .extensions[0];
+
+        return {
+          solutionCode: model.getValue(),
+          langExtension
+        }
       }
     })
     .then((response) => {
-      const solution_code = response[0].result; // extracted solution code
+      const { solutionCode, langExtension } = response[0].result;
+      // create the name of the file as "[problem-name].[language]"
+      const fileName = tab.url.split('/')[4] + langExtension;
+
 
       // TODO: Push solution code to a GitHub repo
 
